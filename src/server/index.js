@@ -1,28 +1,41 @@
-var path = require('path')
-const express = require('express')
-const mockAPIResponse = require('./mockAPI.js')
-const dotenv = require('dotenv');
+// Including all dependencies
+
+var path = require('path') // Provides utilities for working with file and directory paths
+
+const mockAPIResponse = require('./mockAPI.js') // Using mockAPI.js for testing
+
+const dotenv = require('dotenv'); // Module that loads environment variables from a .env file into process.env
 dotenv.config();
 
-// You could call it aylienapi, or anything else
-var textapi = new MeaningCloud({
-    application_key: process.env.API_KEY
-});
+const express = require('express') // Express to run server and routes
+const app = express() // Start up an instance of app
 
-const app = express()
+// Creation of API object
+var textapi = {
+    application_key: process.env.API_KEY,
+    application_URL: "https://api.meaningcloud.com/sentiment-2.1"
+};
 
-app.use(express.static('dist'))
+const bodyParser = require('body-parser'); // Add body-parser dependencies
+app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.json());
 
-console.log(__dirname)
+// Use Cors
+const cors = require('cors'); // Add cors dependencies
+app.use(cors());
 
-app.get('/', function (req, res) {
-    // res.sendFile('dist/index.html')
-    res.sendFile(path.resolve('src/client/views/index.html'))
-})
+// Initialize the "dist" folder
+app.use(express.static('dist'));
 
 // designates what port the app will listen to for incoming requests
 app.listen(8080, function () {
     console.log('Example app listening on port 8080!')
+})
+
+// GET function for / root channel
+app.get('/', function (req, res) {
+    res.sendFile('dist/index.html')
+    //res.sendFile(path.resolve('src/client/views/index.html'))
 })
 
 app.get('/test', function (req, res) {
