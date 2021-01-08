@@ -13,7 +13,7 @@ const app = express() // Start up an instance of app
 // Creation of API object
 var textapi = {
     application_key: process.env.API_KEY,
-    application_URL: process.end.API_URL
+    application_URL: process.env.API_URL
 };
 
 const bodyParser = require('body-parser'); // Add body-parser dependencies
@@ -40,4 +40,8 @@ app.get('/', function (req, res) {
 
 app.get('/test', function (req, res) {
     res.send(mockAPIResponse)
+})
+
+app.post('/test', function(req, res){
+    console.log(req.body)
 })

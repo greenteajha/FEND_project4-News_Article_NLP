@@ -1,16 +1,31 @@
+const retrieveNLPresults = async (APIRequest) => {
+    const res = await fetch(
+        '/test', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(APIRequest),
+        }
+    )
+
+    try{
+        const APIResult = await res.json()
+        return APIResult
+    } catch (Error){
+        console.log("ERROR MESSAGE: "+Error)
+    }
+}
+
 function handleSubmit(event) {
     event.preventDefault()
 
-    // check what text was put into the form field
-    let formText = document.getElementById('name').value
-    checkForName(formText)
+    const submittedURL = document.getElementById('url').value;
 
-    console.log("::: Form Submitted :::")
-    fetch('http://localhost:8080/test')
-    .then(res => res.json())
-    .then(function(res) {
-        document.getElementById('results').innerHTML = res.message
-    })
+    //checkForName(formText)
+
+    console.log(submittedURL)
+    retrieveNLPresults({submittedURL})
 }
 
 export { handleSubmit }
