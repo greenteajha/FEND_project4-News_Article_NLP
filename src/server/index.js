@@ -13,7 +13,7 @@ const app = express() // Start up an instance of app
 // Creation of API object
 var textapi = {
     application_key: process.env.API_KEY,
-    application_URL: "https://api.meaningcloud.com/sentiment-2.1"
+    application_URL: process.end.API_URL
 };
 
 const bodyParser = require('body-parser'); // Add body-parser dependencies
