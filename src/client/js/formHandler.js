@@ -1,6 +1,6 @@
 import { validateURL } from "./validation" //Import URL validation function
 
-//Posts user sentiment analysis API request to Meaningcloud
+//Asynchronous function to post user sentiment analysis API request to the server-end
 const retrieveNLPresults = async (APIRequest) => {
     const res = await fetch(
         '/apirequest', {
@@ -20,13 +20,14 @@ const retrieveNLPresults = async (APIRequest) => {
     }
 }
 
+// Function to update the client-end UI with the API results
 function updateUI(APIObject){
-    const resultsHandle = document.getElementById('results')
-    console.log(APIObject)
 
-    /*let confidenceText = document.createElement("div")
-    confidenceText.setAttribute("id","confidenceText")
-    confidenceText.innerHTML = APIObject.resultText*/
+    // Empty out any previous results
+    const resultsHandle = document.getElementById('results')
+    resultsHandle.innerHTML = '';
+
+    // Create a div for each different type of result
     let confidenceResult = document.createElement("div")
     confidenceResult.setAttribute("id","confidenceResult")
     confidenceResult.innerHTML = APIObject.resultConfidence
@@ -36,40 +37,44 @@ function updateUI(APIObject){
     let confidenceAgreement = document.createElement("div")
     confidenceAgreement.setAttribute("id","confidenceResult")
     confidenceAgreement.innerHTML = APIObject.resultAgreement
-    //resultsHandle.appendChild(confidenceText)
+
+    // Add this under the result section
     resultsHandle.appendChild(confidenceResult)
     resultsHandle.appendChild(confidenceScoreTag)
     resultsHandle.appendChild(confidenceAgreement)
     
 }
 
+// Function to execute when the user clicks on the submit button
 function handleSubmit(event) {
     event.preventDefault()
 
+    // Retrieve user's input
     const submittedURL = document.getElementById('url').value;
 
+    // Run user's input through a validation test to check if it's an URL
     const validate = validateURL(submittedURL)
 
-    //console.log(validate)
-
+    // If it is an URL, send input over to the server-end
     if(validate==true){
-        console.log("It is the URL")
+
+        retrieveNLPresults({submittedURL})
+        .then(
+            function(result){    
+                updateUI(result)
+            }
+    
+        )
+
+    // If it is not an URL, raise an alert for the user to key in the right information
     }else if(validate==false){
+
         alert("Please enter a valid URL")
-    }else{
-        console.log("ERROR")
+    
     }
 
-    //console.log(submittedURL)
-    retrieveNLPresults({submittedURL})
-    .then(
-        function(result){
-            //console.log(result)
-
-            updateUI(result)
-        }
-
-    )
+    
 }
 
+// Export handleSubmit function for the main index.js to use
 export { handleSubmit }
