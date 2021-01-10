@@ -26,14 +26,15 @@ app.use(cors());
 app.use(express.static('dist'));
 
 // designates what port the app will listen to for incoming requests
-app.listen(8080, function () {
-    console.log('Example app listening on port 8080!')
+app.listen(8081, function () {
+    console.log('Example app listening on port 8081!')
 })
 
-// GET function for / root channel
+
+/*// GET function for / root channel
 app.get('/', function (req, res) {
-    res.sendFile('dist/index.html')
-})
+    res.sendFile('../dist/index.html')
+})*/
 
 // Use asynchronous function to:
 // 1. Receive client request
@@ -42,11 +43,13 @@ app.get('/', function (req, res) {
 // 4. Receive API POST response and send it back to the client
 app.post('/apirequest', async function(req, res){
 
+    console.log("ONE!")
+
     // Encode client request
     const submittedURL = encodeURI(req.body.submittedURL)
     // Craft API POST request
     const fetchURL = textapi.application_URL+"?key="+textapi.application_key+"&of=json&url="+submittedURL+"&model=general&lang=en"
-
+    console.log(fetchURL)
     // Submit API POST and wait for response
     const response = await fetch (fetchURL)
 

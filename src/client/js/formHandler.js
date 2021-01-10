@@ -3,7 +3,7 @@ import { validateURL } from "./validation" //Import URL validation function
 //Asynchronous function to post user sentiment analysis API request to the server-end
 const retrieveNLPresults = async (APIRequest) => {
     const res = await fetch(
-        '/apirequest', {
+        'http://localhost:8081/apirequest', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -30,13 +30,13 @@ function updateUI(APIObject){
     // Create a div for each different type of result
     let confidenceResult = document.createElement("div")
     confidenceResult.setAttribute("id","confidenceResult")
-    confidenceResult.innerHTML = APIObject.resultConfidence
+    confidenceResult.innerHTML = "Confidence Rating: "+APIObject.resultConfidence
     let confidenceScoreTag = document.createElement("div")
-    confidenceScoreTag.setAttribute("id","confidenceResult")
-    confidenceScoreTag.innerHTML = APIObject.resultScoretag
+    confidenceScoreTag.setAttribute("id","scoreTagResult")
+    confidenceScoreTag.innerHTML = "Score Tag: "+APIObject.resultScoretag
     let confidenceAgreement = document.createElement("div")
-    confidenceAgreement.setAttribute("id","confidenceResult")
-    confidenceAgreement.innerHTML = APIObject.resultAgreement
+    confidenceAgreement.setAttribute("id","agreementResult")
+    confidenceAgreement.innerHTML = "Agreement: "+APIObject.resultAgreement
 
     // Add this under the result section
     resultsHandle.appendChild(confidenceResult)
