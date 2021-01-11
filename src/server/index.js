@@ -36,6 +36,10 @@ app.get('/', function (req, res) {
     res.sendFile('../dist/index.html')
 })*/
 
+app.get('/', function (req, res) {
+    res.sendFile(path.resolve('src/client/views/index.htmll'))
+})
+
 // Use asynchronous function to:
 // 1. Receive client request
 // 2. Craft API POST request
