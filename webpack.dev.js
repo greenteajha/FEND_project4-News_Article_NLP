@@ -1,3 +1,4 @@
+const path = require('path')
 const webpack = require('webpack')
 const HtmlWebPackPlugin = require("html-webpack-plugin")
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -6,6 +7,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
     entry: './src/client/index.js',
     mode: 'development',
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: 'bundle.min.js'
+    },
     devtool: 'source-map',
     stats: 'verbose',
     module: {
@@ -26,7 +31,7 @@ module.exports = {
             template: "./src/client/views/index.html",
             filename: "./index.html",
         }),
-        
+
         new CleanWebpackPlugin({
             // Simulate the removal of files
             dry: true,
