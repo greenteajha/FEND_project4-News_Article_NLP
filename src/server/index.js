@@ -32,14 +32,8 @@ app.listen(listeningPort, function () {
     console.log('Example app listening on port 8081!')
 })
 
-
-/*// GET function for / root channel
 app.get('/', function (req, res) {
-    res.sendFile('../dist/index.html')
-})*/
-
-app.get('/', function (req, res) {
-    res.sendFile(path.resolve('src/client/views/index.htmll'))
+    res.sendFile(path.resolve('dist/index.html'))
 })
 
 // Use asynchronous function to:
@@ -49,13 +43,10 @@ app.get('/', function (req, res) {
 // 4. Receive API POST response and send it back to the client
 app.post('/apirequest', async function(req, res){
 
-    console.log("ONE!")
-
     // Encode client request
     const submittedURL = encodeURI(req.body.submittedURL)
     // Craft API POST request
     const fetchURL = textapi.application_URL+"?key="+textapi.application_key+"&of=json&url="+submittedURL+"&model=general&lang=en"
-    console.log(fetchURL)
     // Submit API POST and wait for response
     const response = await fetch (fetchURL)
 
@@ -65,8 +56,6 @@ app.post('/apirequest', async function(req, res){
 
         // Store response into an object to send back to the client-side
         const data = await response.json()
-        console.log(data)
-        //for (const text of data.sentence_list){
 
         analysisResult = {
             resultScoretag: data.score_tag,
@@ -76,8 +65,6 @@ app.post('/apirequest', async function(req, res){
             resultIrony: data.irony,
         }
             
-        //}
-
         // Send response back to the client-side
         res.send(analysisResult)
         

@@ -3,9 +3,7 @@ const fetch = require("node-fetch");
 
 //Asynchronous function to post user sentiment analysis API request to the server-end
 const retrieveNLPresults = async (APIRequest) => {
-
-    console.log("Client request is: "+APIRequest)
-
+    
     for(var ar in APIRequest) {
         console.log(ar + "=" + APIRequest[ar]);
     }
