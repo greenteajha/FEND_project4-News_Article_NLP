@@ -1,15 +1,16 @@
+// Import dependencies
 const path = require('path')
-const webpack = require('webpack')
 const HtmlWebPackPlugin = require("html-webpack-plugin")
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+// Indicate module settings
 module.exports = {
     entry: './src/client/index.js',
     mode: 'development',
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'bundle.min.js'
+        filename: 'main.js'
     },
     devtool: 'source-map',
     stats: 'verbose',

@@ -1,6 +1,6 @@
+// Import handleSubmit function from formHandler.js
 import { handleSubmit } from './js/formHandler'
-import { validateURL } from './js/validation'
-
+// Import scss styles
 import './styles/styles.scss'
 
 // Create an event listener for clicking the button

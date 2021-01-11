@@ -63,16 +63,18 @@ app.post('/apirequest', async function(req, res){
 
         // Store response into an object to send back to the client-side
         const data = await response.json()
-        console.log(data.sentence_list)
-        for (const text of data.sentence_list){
+        console.log(data)
+        //for (const text of data.sentence_list){
 
-            analysisResult = {
-                resultConfidence: text.confidence,
-                resultScoretag: text.score_tag,
-                resultAgreement: text.agreement
-            }
-            
+        analysisResult = {
+            resultScoretag: data.score_tag,
+            resultAgreement: data.agreement,
+            resultSubjectivity: data.subjectivity,
+            resultConfidence: data.confidence,
+            resultIrony: data.irony,
         }
+            
+        //}
 
         // Send response back to the client-side
         res.send(analysisResult)

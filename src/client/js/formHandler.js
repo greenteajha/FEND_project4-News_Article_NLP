@@ -1,7 +1,15 @@
 import { validateURL } from "./validation" //Import URL validation function
+const fetch = require("node-fetch");
 
 //Asynchronous function to post user sentiment analysis API request to the server-end
 const retrieveNLPresults = async (APIRequest) => {
+
+    console.log("Client request is: "+APIRequest)
+
+    for(var ar in APIRequest) {
+        console.log(ar + "=" + APIRequest[ar]);
+    }
+
     const res = await fetch(
         'http://localhost:8081/apirequest', {
             method: 'POST',
@@ -28,21 +36,29 @@ function updateUI(APIObject){
     resultsHandle.innerHTML = '';
 
     // Create a div for each different type of result
+    let scoreTagResult = document.createElement("div")
+    scoreTagResult.setAttribute("id","scoreTagResult")
+    scoreTagResult.innerHTML = "Score Tag: "+APIObject.resultScoretag
+    let agreementResult = document.createElement("div")
+    agreementResult.setAttribute("id","agreementResult")
+    agreementResult.innerHTML = "Agreement: "+APIObject.resultAgreement
+    let subjectivityResult = document.createElement("div")
+    subjectivityResult.setAttribute("id","subjectivityResult")
+    subjectivityResult.innerHTML = "Subjectivity: "+APIObject.resultSubjectivity
     let confidenceResult = document.createElement("div")
     confidenceResult.setAttribute("id","confidenceResult")
     confidenceResult.innerHTML = "Confidence Rating: "+APIObject.resultConfidence
-    let confidenceScoreTag = document.createElement("div")
-    confidenceScoreTag.setAttribute("id","scoreTagResult")
-    confidenceScoreTag.innerHTML = "Score Tag: "+APIObject.resultScoretag
-    let confidenceAgreement = document.createElement("div")
-    confidenceAgreement.setAttribute("id","agreementResult")
-    confidenceAgreement.innerHTML = "Agreement: "+APIObject.resultAgreement
+    let ironyResult = document.createElement("div")
+    ironyResult.setAttribute("id","ironyResult")
+    ironyResult.innerHTML = "Irony: "+APIObject.resultIrony
 
-    // Add this under the result section
+    // Add divs under the result section
+    resultsHandle.appendChild(scoreTagResult)
+    resultsHandle.appendChild(agreementResult)
+    resultsHandle.appendChild(subjectivityResult)
     resultsHandle.appendChild(confidenceResult)
-    resultsHandle.appendChild(confidenceScoreTag)
-    resultsHandle.appendChild(confidenceAgreement)
-    
+    resultsHandle.appendChild(ironyResult)
+
 }
 
 // Function to execute when the user clicks on the submit button
@@ -58,23 +74,29 @@ function handleSubmit(event) {
     // If it is an URL, send input over to the server-end
     if(validate==true){
 
+        // Show an analysis pending bar
+        const resultsHandle = document.getElementById('results')
+        resultsHandle.innerHTML = '';
+        let pendingAnalysis = document.createElement("div")
+        pendingAnalysis.setAttribute("id","pendingAnalysis")
+        pendingAnalysis.innerHTML = "Pending analysis, this may take up to a minute..."
+        resultsHandle.appendChild(pendingAnalysis)
+
         retrieveNLPresults({submittedURL})
         .then(
             function(result){    
                 updateUI(result)
-            }
-    
+            
+            }  
         )
 
     // If it is not an URL, raise an alert for the user to key in the right information
     }else if(validate==false){
 
-        alert("Please enter a valid URL")
-    
-    }
-
-    
+        alert("Please enter a valid URL")    
+    }    
 }
 
 // Export handleSubmit function for the main index.js to use
 export { handleSubmit }
+export { retrieveNLPresults }
