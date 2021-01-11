@@ -13,7 +13,7 @@ var textapi = {
     application_URL: process.env.API_URL
 };
 
-let listeningPort = process.env.PORT || 8081;
+let listeningPort = 8081;
 
 const bodyParser = require('body-parser'); // Add body-parser dependencies
 app.use(bodyParser.urlencoded({ extended: false}));
