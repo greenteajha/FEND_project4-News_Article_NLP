@@ -13,6 +13,8 @@ var textapi = {
     application_URL: process.env.API_URL
 };
 
+let listeningPort = process.env.PORT || 8081;
+
 const bodyParser = require('body-parser'); // Add body-parser dependencies
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
@@ -26,7 +28,7 @@ app.use(cors());
 app.use(express.static('dist'));
 
 // designates what port the app will listen to for incoming requests
-app.listen(8081, function () {
+app.listen(listeningPort, function () {
     console.log('Example app listening on port 8081!')
 })
 
