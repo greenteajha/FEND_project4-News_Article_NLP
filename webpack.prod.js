@@ -11,7 +11,9 @@ module.exports = {
     mode: 'production',
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'main.js'
+        filename: 'main.js',
+        libraryTarget: 'var',
+        library: 'Client',
     },
     module: {
         rules: [

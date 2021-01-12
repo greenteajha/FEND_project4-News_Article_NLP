@@ -8,6 +8,8 @@ const express = require('express') // Express to run server and routes
 const app = express() // Start up an instance of app
 
 // Creation of API object
+// Do note that the API key and URL is stated here rather than in the .env file,
+// is due to how the initial reviewer requested for the key to be indicated here for project review purpose.
 var textapi = {
     application_key: "1e974d78b7c20ecdd2f71f6a542ff5fa",
     application_URL: "https://api.meaningcloud.com/sentiment-2.1"
