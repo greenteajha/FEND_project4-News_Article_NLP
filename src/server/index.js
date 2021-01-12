@@ -9,8 +9,8 @@ const app = express() // Start up an instance of app
 
 // Creation of API object
 var textapi = {
-    application_key: process.env.API_KEY,
-    application_URL: process.env.API_URL
+    application_key: "1e974d78b7c20ecdd2f71f6a542ff5fa",
+    application_URL: "https://api.meaningcloud.com/sentiment-2.1"
 };
 
 let listeningPort = 8081;
